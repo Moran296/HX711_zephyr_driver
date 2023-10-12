@@ -329,7 +329,9 @@ static int hx711_channel_get(const struct device *dev, enum sensor_channel chan,
 
 	switch (hx711_chan) {
 	case HX711_SENSOR_CHAN_WEIGHT: {
-		val->val1 = sensor_value_to_double(&data->slope) * (data->reading - data->offset);
+		//This branch is for testing purposes of returning only raw reading without any calculations
+		//val->val1 = sensor_value_to_double(&data->slope) * (data->reading - data->offset);
+		val->val1 = data->reading;
 		return 0;
 	}
 	default:
