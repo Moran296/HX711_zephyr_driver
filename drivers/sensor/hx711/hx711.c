@@ -375,7 +375,7 @@ static int hx711_init(const struct device *dev)
 	LOG_DBG("SCK pin controller is %p, name is %s\n", data->sck_gpio, data->sck_gpio->name);
 
 	ret = gpio_pin_configure(data->sck_gpio, cfg->sck_pin,
-				 GPIO_OUTPUT_INACTIVE | cfg->sck_flags);
+				 GPIO_OUTPUT_ACTIVE | cfg->sck_flags);
 	if (ret != 0) {
 		return ret;
 	}
