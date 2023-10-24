@@ -134,7 +134,9 @@ static int hx711_sample_fetch(const struct device *dev, enum sensor_channel chan
 	irq_unlock(key);
 #endif
 
-	count ^= 0x800000;
+	if (count & 0x800000) {
+		count |= 0xff000000;
+	}
 
 	data->reading = count;
 
@@ -528,7 +530,7 @@ int avia_hx711_power(const struct device *dev, enum hx711_power pow)
 		hx711_sample_fetch(dev, HX711_SENSOR_CHAN_WEIGHT);
 		return ret;
 	case HX711_POWER_OFF:
-		ret = gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, data->power);
+		ret = gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, 0);
 		return ret;
 	default:
 		return -ENOTSUP;
